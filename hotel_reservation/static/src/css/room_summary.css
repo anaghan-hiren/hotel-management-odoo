@@ -1,0 +1,102 @@
+.table_header {
+    text-align: center;
+    min-width: 100px;
+    vertical-align: middle;
+}
+
+.table_reserved {
+    background-color: red;
+    color: white;
+    text-align: center;
+    min-width: 100px;
+    vertical-align: middle;
+    cursor: pointer;
+}
+.table_reserved1 {
+    background-color: blue;
+    color: white;
+    text-align: center;
+    min-width: 100px;
+    vertical-align: middle;
+    cursor: pointer;
+}
+.table_free {
+    background-color: green;
+    color: white;
+    text-align: center;
+    min-width: 100px;
+    vertical-align: middle;
+    cursor: pointer;
+}
+.manual_rate_line_label{
+    display: none;
+}
+.manual_rate_line_tree .table-responsive .o_list_table > thead{
+    display: none;
+}
+/* .manual_rate_line_tree{
+    margin-top: -30px;
+} */
+.manual_rate_line_tree .table-responsive .o_list_table > thead{
+    display: none;
+}
+.night_rate_line .table-responsive .o_list_table > tfoot > tr {
+    display: none;
+  }
+.night_rate_line .table-responsive{
+    overflow-x: visible !important;
+}
+.manual_rate_line_tree .table-responsive .o_list_table > tbody > tr:nth-child(2) {
+    display: none;
+  }
+
+  .manual_rate_line_tree .table-responsive .o_list_table > tbody > tr:nth-child(3) {
+    display: none;
+  }
+
+  .manual_rate_line_tree .table-responsive .o_list_table > tbody > tr:nth-child(4) {
+    display: none;
+  }
+
+.night_rate_line_check .o_field_x2many_list_row_add , .night_rate_line_check .o_list_record_remove {
+    display: none !important;
+}
+
+
+  
+
+/*$color_1: white;
+$background-color_1: red;
+$background-color_2: blue;
+$background-color_3: green;
+
+.table_header {
+    text-align: center;
+    min-width: 100px;
+    vertical-align: middle;
+}
+.table_reserved {
+    background-color: $background-color_1;
+    color: $color_1;
+    text-align: center;
+    min-width: 100px;
+    vertical-align: middle;
+    cursor: pointer;
+}
+.table_reserved1 {
+    background-color: $background-color_2;
+    color: $color_1;
+    text-align: center;
+    min-width: 100px;
+    vertical-align: middle;
+    cursor: pointer;
+}
+.table_free {
+    background-color: $background-color_3;
+    color: $color_1;
+    text-align: center;
+    min-width: 100px;
+    vertical-align: middle;
+    cursor: pointer;
+}
+*/

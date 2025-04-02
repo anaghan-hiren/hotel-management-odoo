@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<template id="report_transfers">
+		<t t-call="web.html_container">
+			<t t-call="web.external_layout">
+				<div class="page">
+					<t t-out="docs.html_body"/>
+				</div>
+			</t>
+		</t>
+	</template>
+
+	<record id="action_report_room_transfers" model="ir.actions.report">
+		<field name="name">Transfers Report</field>
+		<field name="model">room.transfers</field>
+		<field name="report_type">qweb-pdf</field>
+		<field name="report_name">hotel_reservation.report_transfers</field>
+		<field name="report_file">hotel_reservation.report_transfers</field>
+		<field name="binding_model_id" ref="hotel_reservation.model_room_transfers"/>
+	</record>
+
+</odoo>

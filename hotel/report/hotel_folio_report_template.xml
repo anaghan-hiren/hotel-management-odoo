@@ -1,0 +1,79 @@
+<odoo>
+    <!--Template for hotel folio -->
+    <template id="report_hotel_folio_services">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <div class="page">
+                    <br />
+                    <br />
+                    <div class="row mt32 mb32">
+                        <h4 class="col-12">
+                            <span>
+                                <center>Booking NO :- <t t-esc="docs.reservation_id.reservation_no"/> -  <t t-esc="docs.partner_id.name"/> </center>
+                            </span>
+                        </h4>
+                    </div>
+                    <table class="table table-condensed">
+                        <tr style="background: #f0f8ff;">
+                            <td>
+                                <strong>Service</strong>
+                            </td>
+                            <td>
+                                <strong>Description</strong>
+                            </td>
+                            <td>
+                                <strong>Duration/Qty</strong>
+                            </td>
+                            <td>
+                                <strong>Price</strong>
+                            </td>
+                            <td>
+                                <strong>Taxes</strong>
+                            </td>
+                            <td>
+                                <strong>Subtotal</strong>
+                            </td>
+                        </tr>
+                        <t t-set="total" t-value="0"/>
+                        <tr t-foreach="docs.service_line_ids" t-as="doc">
+                            <td>
+                                <span t-esc="doc.product_id.name" />
+                            </td>
+                            <td>
+                                <span t-esc="doc.name" />
+                            </td>
+                            <td class="text-center">
+                                <span t-esc="doc.product_uom_qty" />
+                            </td>
+                            <td>
+                                <span t-esc="doc.price_unit" />
+                            </td>
+                            <td>
+                                <t t-esc="','.join(doc.tax_id.mapped('name'))"/>
+
+                            </td>
+                             <td>
+                                <span t-esc="doc.price_subtotal" />
+                                <t t-set="total" t-value="total + doc.price_subtotal"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td />
+                            <td />
+                            <td />
+                            <td />
+                            <td>
+                                <strong>Net Total:</strong>
+                            </td>
+                            <td>
+                                 <span t-esc="total" />
+                            </td>
+                        </tr>
+                    
+
+                    </table>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>

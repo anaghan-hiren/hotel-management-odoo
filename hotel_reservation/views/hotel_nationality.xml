@@ -1,0 +1,31 @@
+<odoo>
+    <record id="nationality_tree" model="ir.ui.view">
+        <field name="name">nationality tree</field>
+        <field name="model">res.partner.nationality</field>
+        <field name="arch" type="xml">
+            <tree string="Nationality">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+    <record id="nationality_form" model="ir.ui.view">
+        <field name="name">nationality form</field>
+        <field name="model">res.partner.nationality</field>
+        <field name="arch" type="xml">
+            <tree string="Nationality" editable="bottom">
+                <field name="name" colspan="1"/>
+            </tree>
+        </field>
+    </record>
+    <record id="nationality_action" model="ir.actions.act_window">
+        <field name="name">Nationalities</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">res.partner.nationality</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <!-- This Menu Item must have a parent and an action -->
+
+ <menuitem id="nationality_menu" name="Nationality" parent="hotel.hotel_configuration_menu"
+              action="nationality_action" sequence="100"/>
+
+</odoo>

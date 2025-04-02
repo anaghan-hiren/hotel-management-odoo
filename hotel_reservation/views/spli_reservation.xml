@@ -1,0 +1,112 @@
+<odoo>
+	<record id="split_reservation_tree" model="ir.ui.view">
+		<field name="name">split reservation tree</field>
+		<field name="model">split.reservation</field>
+		<field name="arch" type="xml">
+			<tree string="Blocking" create="0" delete="0" duplicate="0">
+				<field name="reservation_id"/>
+				<field name="partner_id"/>
+				<field name="checkin" />
+				<field name="checkout" />
+				<field name="reservation_state"/>
+				<field name="state"/>
+			</tree>
+		</field>
+	</record>
+	<record id="split_reservation_form" model="ir.ui.view">
+		<field name="name">split reservation form</field>
+		<field name="model">split.reservation</field>
+		<field name="arch" type="xml">
+			<form string="Blocking" create="0" delete="0" duplicate="0">
+				<header>
+					<button name="action_lock" string="Lock" class="btn-default" type="object"
+							states="draft"/>
+					<field name="state" widget="statusbar"/>
+				</header>
+				<sheet>
+					<div class="oe_button_box" name="button_box">
+						<button	name="open_folio_view" type="object" icon="fa-file-text-o" class="oe_stat_button" attrs="{'invisible': [('no_of_folio', '=', 0)]}">
+							<field name="no_of_folio" widget="statinfo" string="Folio"/>
+						</button>
+					</div>
+					<group>
+						<group>
+							<field name="reservation_id" readonly="1"/>
+							<field name="checkin" />
+						</group>
+						<group>
+							<field name="partner_id"/>
+							<field name="checkout" />
+						</group>
+					</group>
+					<field name="split_lines">
+						<tree create="0" delete="0">
+							<field name="partner_id" required="1"/>
+							<field name="no_of_person"/>
+							<field name="room_type_id" readonly="0"/>
+							<field name="room_id" required="1"/>
+							<field name="night"/>
+							<field name="is_checkin" invisible="1"/>
+							<field name="is_folio" invisible="1"/>
+							<field name="reservation_line" invisible="1"/>
+							<field name="check_line" invisible="1"/>
+							<field name="folio_id" invisible="1"/>
+							<field name="checkin" invisible="1"/>
+						</tree>
+						<form>
+							<group>
+								<group>
+									<field name="partner_id" required="1"/>
+									<field name="no_of_person"/>
+									<field name="checkin" invisible="1"/>
+									<field name="room_type_id"/>
+									<field name="is_folio" invisible="1"/>
+								</group>
+								<group>
+									<field name="room_id"/>
+									<field name="night"/>
+									<field name="folio_id" invisible="1"/>
+									<field name="checkout" invisible="1"/>
+									<field name="type_of_rate" options="{'horizontal': true}" widget='radio' invisible="1"/>
+									<field name="night_rate_line" attrs="{'readonly': [('type_of_rate', '!=', 'night_of_rate')],'invisible':[('type_of_rate','!=','night_of_rate')]}" options="{'no_open': True}" force_save="1" invisible="1">
+										<tree editable="bottom" delete="0" create="0" class="night_rate_line">
+											<field name="night_number" readonly="1" force_save="1"/>
+											<field name="rate_code" />
+										</tree>
+									</field>
+									<label for="manual_rate_line" class="manual_rate_line_label" attrs="{'invisible':[('type_of_rate','!=','manually')]}" invisible="1"/> 
+									<field name="manual_rate_line" class="manual_rate_line" attrs="{'readonly': [('type_of_rate', '!=', 'manually')],'invisible':[('type_of_rate','!=','manually')]}" options="{'no_open': True}" force_save="1" invisible="1">
+										<tree editable="bottom" delete="0" create="0" class="manual_rate_line_tree">
+											<field name="night_number" readonly="1" force_save="1"/>
+											<field name="rate_code" />
+										</tree>
+									</field>
+									<field name="geust_lines">
+										<tree string="Guest Name" editable="bottom">
+											<field name="name" required="1"/>
+										</tree>
+									</field>
+								</group>
+							</group>
+						</form>
+					</field>
+				</sheet>
+			</form>
+		</field>
+	</record>
+	<record id="split_reservation_action" model="ir.actions.act_window">
+		<field name="name">Blocking</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">split.reservation</field>
+		<field name="view_mode">tree,form</field>
+	</record>
+
+	<menuitem
+		id="menu_split_reservation"
+		name="Blocking"
+		action="split_reservation_action"
+		parent="menu_hotel_reservation"
+		sequence="5"
+	/>
+
+</odoo>

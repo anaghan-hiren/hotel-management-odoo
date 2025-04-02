@@ -1,0 +1,17 @@
+<odoo>
+	<data noupdate="1">
+		<!--  Demo Data  -->
+		<record id="hotel_booked_data" model="booked.booked">
+			<field name="name">Hotel Booked Chart</field>
+		</record>
+
+		<record id="hotel_availability_data" model="hotel.availability">
+			<field name="name">Hotel Availability</field>
+		</record>
+
+		<record id="hotel_room_status_data" model="room.status">
+			<field name="name">Room Status</field>
+		</record>
+		
+	</data>
+</odoo>

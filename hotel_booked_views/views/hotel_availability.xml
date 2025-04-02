@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+
+		<!-- Form View For Hotel Availability Analysis -->
+		<record id="form_hotel_availability_view" model="ir.ui.view">
+			<field name="name">hotel.availability</field>
+			<field name="model">hotel.availability</field>
+			<field name="arch" type="xml">
+				<form string="Hotel Availability" create="0" edit="1" delete="0" duplicate="0">
+					 <style>.o_FormRenderer_chatterContainer{
+							max-width: inherit !important;
+						}
+						.o_content{
+							background: #fff;
+						}
+						.bookingchart,.bookedheader 
+						{
+							display: flex;
+						}
+						.bookedheader{
+							text-align: center;
+							align-items: center;
+							display: block;
+						}
+						.o_form_button_save,
+						.o_form_button_cancel{
+							display:none;
+						}
+						.leftslider{
+							background: #f6f6f6;
+							line-height: 2;
+							padding: 10px;
+							border-radius: 4px;
+							width: 15%;
+							position: absolute;
+							height: 100%;
+						}
+						.bodybook{
+							 background: #f6f6f6;
+							line-height: 2;
+							padding: 10px;
+							border-radius: 4px;
+							width: 100%;
+						}
+						.headercall{
+							background: #ced4da;
+							font-size: 16px;
+							padding: 6px 15px;
+							border-radius: 4px;
+							font-weight: bold;
+							text-align: center;
+						   
+						}
+						.roomscall{
+							font-size: 11px;
+							padding: 6px 2px;
+							border-radius: 4px;
+							font-weight: bold;
+							width: 1%;
+						}
+						.room{
+							border: 1px solid #dee2e6;
+							padding: 4px;
+							border-radius: 2px;
+							background: #e9ecef;
+							text-align: center;
+							cursor: pointer;
+						}
+						.room:hover{
+							border: 1px solid #ced4da;
+							padding: 2px;
+							background: #ced4da;
+						
+						}
+						.roomtd{
+							width: 100%;
+						}
+						</style>
+					<div class="bookedheader">
+						<h3><field name="name" readonly="1" /></h3>
+						<div> Date Filter : <field name="from_date"/>  To <field name="to_date"/> </div>
+					</div>
+					<div class="bookingchart">
+						<div class="bodybook">
+							<field name="html_body"/>
+						</div>
+					</div>
+				</form>
+			</field>
+		</record>
+
+		<!-- Action For Hotel Availability Analysis -->
+		<record id="action_hotel_availability_compare" model="ir.actions.act_window">
+			<field name="name">Hotel Availability</field>
+			<field name="res_model">hotel.availability</field>
+			<field name="view_mode">form</field>
+			<field name="target">inline</field>
+			<field name="res_id" ref="hotel_booked_views.hotel_availability_data"/>
+		</record>
+		
+		<!-- Menu For Purchase Price Compare Analysis -->
+		<menuitem id="hotel_dashboard_menuitem" name="Dashboard" sequence="0" parent="hotel.hotel_management_menu"/>
+
+		<menuitem id="hotel_availability_menuitem" name="Hotel Availability" action="action_hotel_availability_compare" parent="hotel_booked_views.hotel_dashboard_menuitem" sequence="1" />
+	</data>
+</odoo>

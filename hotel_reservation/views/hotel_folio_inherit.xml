@@ -1,0 +1,117 @@
+<odoo>
+
+	<!-- Inherit Form View to Modify it -->
+	<record id="view_hotel_folio_form_inherit" model="ir.ui.view">
+		<field name="name">view_hotel_folio_form_inherit</field>
+		<field name="model">hotel.folio</field>
+		<field name="inherit_id" ref="hotel.view_hotel_folio_form"/>
+		<field name="arch" type="xml">
+			<xpath expr="//form" position="attributes">
+				<attribute name="create">0</attribute>
+			</xpath>
+
+			<xpath expr="//header" position="inside">
+				<button name="action_draft" states="sale" string="Set To Draft" class="btn-primary" type="object"/>
+				<!-- <button name="action_register_payment" string="Register Payment" class="oe_highlight" type="object" attrs="{'invisible':[('is_show_register_payment','=',False)]}"/> -->
+				<button name="action_register_payment" string="Register Payment" class="oe_highlight" type="object" context="{'blocking_line':blocking_line}"/>
+				<button name="%(hotel_reservation.action_transfer_request_wizard)d" string="Transfer Request" class="oe_highlight" type="action" attrs="{'invisible':['|',('state','in',('done','cancel')),('room_line_ids','=',False)]}"/>
+				<field name="is_show_register_payment" invisible="1"/>
+				<field name="reservation_id" invisible="1"/>
+			</xpath>
+
+			<xpath expr="//field[@name='pricelist_id']" position="attributes">
+				<attribute name="invisible">1</attribute>
+			</xpath>
+
+			<xpath expr="//field[@name='pricelist_id']" position="before">
+				<field name="type_of_rate" />
+				<field name="blocking_line" invisible="1"/>
+			</xpath>
+
+			<xpath expr="//field[@name='warehouse_id']" position="after">
+				<!-- Add your fields or attributes here -->
+				<field name="checkin" readonly="1"/>
+				<field name="checkout" readonly="1"/>
+			</xpath>
+
+			<xpath expr="//field[@name='partner_shipping_id']" position="after">
+				<!-- Add your fields or attributes here -->
+				<field name="price_subtotal" readonly="1"/>
+			</xpath>
+
+			<xpath expr="//field[@name='service_line_ids']/tree/field[@name='product_id']" position="attributes">
+				<attribute name="options">{'no_create_edit':1,'no_create':1}</attribute>
+			</xpath>
+
+			<xpath expr="//field[@name='service_line_ids']/tree/field[@name='product_uom_qty']" position="before">
+				<field name="is_main_guest_use"/>
+				<field name="avl_room_person_ids" widget="many2many_tags" invisible="1"/>
+				<field name="room_person_ids" domain="[('id','in',avl_room_person_ids)]" widget="many2many_tags"/>
+				<field name="s_date"/>
+			</xpath>
+
+			<xpath expr="//field[@name='service_line_ids']/tree/field[@name='product_uom_qty']" position="attributes">
+				<attribute name="string">Quantity</attribute>
+			</xpath>
+			<xpath expr="//field[@name='room_line_ids']" position="after">
+				<group colspan="2" class="oe_subtotal_footer oe_right">
+					<field name="rooms_lines_total" sum="Total Amount (Rooms)"/>
+				</group>
+			</xpath>
+			<xpath expr="//div[hasclass('oe_subtotal_footer_separator')]" position="replace">
+				<field name="grand_total" invisible="1"/>
+				<div class="oe_subtotal_footer_separator oe_inline">
+					<label for="grand_total"/>
+				</div>
+			</xpath>
+			<field name="amount_untaxed" position="before">
+				<field name="service_lines_total" sum="Total Amount (Services)" widget='monetary'/>
+				<field name="service_lines_tax"/>
+			</field>
+			<xpath expr="//field[@name='service_line_ids']" position="attributes">
+				<attribute name="context">{'deafult_ser_checkin_date':checkin_date,'deafult_ser_checkout_date':checkout_date,'default_avl_room_person_ids':avl_room_person_ids}</attribute>
+			</xpath>
+			<xpath expr="//field[@name='service_line_ids']" position="after">
+				<group colspan="2" class="oe_left">
+					<field name="is_main_guest_use"/>
+					<field name="avl_room_person_ids" invisible="1"/>
+					<field name="room_person_ids" widget="many2many_tags" domain="[('id','in',avl_room_person_ids)]"/>
+				</group>
+				<group colspan="2" class="oe_left">
+					<field name="filter_service_lines_total"/>
+					<field name="filter_service_lines_tax"/>
+					<field name="filter_amount_untaxed"/>
+					<field name="filter_amount_tax"/>
+					<field name="filter_amount_total"/>
+				</group>
+			</xpath>
+
+		</field>
+	</record>
+
+	<record id="view_hotel_folio_tree_inherit" model="ir.ui.view">
+		<field name="name">view_hotel_folio_tree_inherit</field>
+		<field name="model">hotel.folio</field>
+		<field name="inherit_id" ref="hotel.view_hotel_folio_tree"/>
+		<field name="arch" type="xml">
+			<xpath expr="//tree" position="attributes">
+				<attribute name="create">0</attribute>
+			</xpath>
+
+
+		</field>
+	</record>
+
+	<record id="view_hotel_room_tree_inherit" model="ir.ui.view">
+		<field name="name">view_hotel_room_tree_inherit</field>
+		<field name="model">hotel.room</field>
+		<field name="inherit_id" ref="hotel.view_hotel_room_tree"/>
+		<field name="arch" type="xml">
+			<xpath expr="//field[@name='room_categ_id']" position="before">
+				<field name="name"/>
+			</xpath>
+
+
+		</field>
+	</record>
+</odoo>

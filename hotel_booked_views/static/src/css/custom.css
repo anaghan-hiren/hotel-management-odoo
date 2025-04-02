@@ -1,0 +1,26 @@
+.custom-table {
+	width: 100%;text-align: center;
+}
+.td-header-availability{
+	border: 2px solid #ced4da;
+    background: #e9ecef;
+}
+.th-title{
+	border-right: 2px solid #ced4da;
+}
+.td-value{
+	line-height: 5;
+    font-size: 20px;
+    font-weight: bold;
+	border: 2px solid #ced4da;
+	width: 200px;
+}
+.book_tree_view thead {
+	display: none;
+}
+.ds-part-type{
+	font-size: 18px;
+    font-weight: bold;
+    color: #212529;
+	line-height: 4;
+}

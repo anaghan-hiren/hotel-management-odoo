@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+	
+	<!-- Form View For Cancel Reservation -->
+	<record id="form_reservation_cancel_view" model="ir.ui.view">
+		<field name="name">reservation.cancel.form</field>
+		<field name="model">reservation.cancel</field>
+		<field name="arch" type="xml">
+			<form string="Cancel Reservation">
+				<group>
+					<group>
+						<field name="reason" required="1" widget="radio"/>
+						<field name="other_reason" attrs="{'invisible':[('reason','!=','other')]}"/>
+					</group>
+				</group>
+				<footer>
+					<button
+						name="action_confirm"
+						string="Confirm"
+						type="object"
+						class="oe_highlight"
+					/>
+					<button
+						string="Cancel"
+						class="btn btn-primary"
+						special="cancel"
+					/>
+				</footer>
+			</form>
+		</field>
+	</record>
+
+	<!-- Action For Cancel Reservation -->
+	<record id="action_reservation_cancel" model="ir.actions.act_window">
+		<field name="name">Reservation Cancel</field>
+		<field name="res_model">reservation.cancel</field>
+		<field name="binding_view_types">form</field>
+		<field name="view_mode">form</field>
+		<field name="target">new</field>
+	</record>
+</odoo>

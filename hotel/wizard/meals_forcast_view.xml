@@ -1,0 +1,48 @@
+<odoo>
+
+	<!-- Form view for Meals Forcast Report -->
+	<record id="view_meals_forcast" model="ir.ui.view">
+		<field name="name">meals.forcast</field>
+		<field name="model">meals.forcast</field>
+		<field name="arch" type="xml">
+			<form string="Meals Forcast Report">
+				<group col="4">
+					<field name="date_start" required="1" />
+					<field name="date_end" required="1" />
+				</group>
+				<footer>
+					<button
+						name="print_report"
+						string="Print"
+						icon="fa-print"
+						type="object"
+						class="oe_highlight"
+					/>
+					<button
+						string="Cancel"
+						icon="fa-close"
+						class="btn btn-primary"
+						special="cancel"
+					/>
+				</footer>
+			</form>
+		</field>
+	</record>
+
+	<!-- Action for Meals Forcast Report -->
+	<record id="action_meals_forcast" model="ir.actions.act_window">
+		<field name="name">Meals Forcast Report</field>
+		<field name="res_model">meals.forcast</field>
+		<field name="view_mode">form</field>
+		<field name="target">new</field>
+	</record>
+	
+	<!-- Menuitem for Meals Forcast Report -->
+	<menuitem
+		name="Meals Forcast Report"
+		action="action_meals_forcast"
+		id="menu_meals_forcast"
+		parent="hotel_report_menu"
+		sequence="31"
+	/>
+</odoo>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+
+		<!-- Form View For Room Transfers -->
+		<record id="form_room_transfers_view" model="ir.ui.view">
+			<field name="name">room.transfers.form</field>
+			<field name="model">room.transfers</field>
+			<field name="arch" type="xml">
+				<form string="Transfers" create="0" edit="1" delete="0" duplicate="0">
+					<header>
+						<button name="print_pdf_repot" string="Print PDF" class="oe_highlight" type="object"/>
+					</header>
+					<sheet>
+						<group>
+							<group>
+								<field name="date_from"/>
+								<field name="date_to"/>
+							</group>
+							<group>
+								<field name="reservation_ids" widget="many2many_tags"/>
+							</group>
+						</group>
+						<h1 style="text-align: center;margin-top: 20px;margin-bottom: 20px;">Transfers</h1>
+						<field name="html_body"/>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+		<!-- Action For Transfers -->
+		<record id="action_room_transfers" model="ir.actions.act_window">
+			<field name="name">Transfers</field>
+			<field name="res_model">room.transfers</field>
+			<field name="view_mode">form</field>
+			<field name="target">inline</field>
+			<field name="res_id" ref="hotel_reservation.hotel_room_transfers"/>
+		</record>
+		
+		<!-- Menu For Transfers -->
+		<menuitem id="menu_for_transfers" name="Transfers" action="action_room_transfers" parent="hotel.hotel_report_menu" sequence="14" />
+
+	</data>
+</odoo>

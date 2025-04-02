@@ -1,0 +1,49 @@
+<odoo>
+
+	<!-- Form view for Print Service Report -->
+	<record id="view_print_service" model="ir.ui.view">
+		<field name="name">print.service</field>
+		<field name="model">print.service</field>
+		<field name="arch" type="xml">
+			<form string="Print Service Report">
+				<group>
+					<field name="is_main_guest_use"/>
+					<field name="avl_room_person_ids" invisible="1"/>
+					<field name="room_person_ids" widget="many2many_tags" domain="[('id','in',avl_room_person_ids)]"/>
+				</group>
+				<footer>
+					<button
+						name="print_report"
+						string="Print"
+						icon="fa-print"
+						type="object"
+						class="oe_highlight"
+					/>
+					<button
+						string="Cancel"
+						icon="fa-close"
+						class="btn btn-primary"
+						special="cancel"
+					/>
+				</footer>
+			</form>
+		</field>
+	</record>
+
+	<!-- Action for Print Service Report -->
+	<record id="action_print_service" model="ir.actions.act_window">
+		<field name="name">Print Service Report</field>
+		<field name="res_model">print.service</field>
+		<field name="view_mode">form</field>
+		<field name="target">new</field>
+	</record>
+	
+	<!-- Menuitem for Print Service Report -->
+	<menuitem
+		name="Print Service Report"
+		action="action_print_service"
+		id="menu_print_service"
+		parent="hotel.hotel_report_menu"
+		sequence="31"
+	/>
+</odoo>

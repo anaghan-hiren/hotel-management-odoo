@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!--Form view for hotel reservation wizard -->
+    <record id="hotel_folio_wizard_form_view" model="ir.ui.view">
+        <field name="name">hotel.folio.wizard.form</field>
+        <field name="model">hotel.folio.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Reservation List">
+                <group >
+                    <group>
+                    <field name="date" />
+                    <field name="folio_ids" widget="many2many_tags"/>
+                    </group>
+                </group>
+                <footer>
+                    <button
+                        name='create_room_lines'
+                        string="Create"
+                        type="object"
+                        icon="fa-level-down"
+                        class="btn btn-primary"
+                    />
+                    <button
+                        special="cancel"
+                        string="Cancel"
+                        icon="fa-close"
+                        class="btn btn-primary"
+                    />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!--hotel folio wizard action-->
+    <record id="action_hotel_folio_wizard" model="ir.actions.act_window">
+        <field name="name">Hotel Folio Close Days</field>
+        <field name="res_model">hotel.folio.wizard</field>
+        <field name="binding_view_types">form</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <!-- This Menu Item must have a parent and an action -->
+    <menuitem id="hotel_folio_wizard_menu" name="Folio Close Day" parent="hotel.menu_all_folio" action="hotel_reservation.action_hotel_folio_wizard" sequence="50"/>
+</odoo>

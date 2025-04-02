@@ -1,0 +1,47 @@
+<odoo>
+    <!--Form view for folio report wizard -->
+    <record id="view_hotel_folio_guest_wizard" model="ir.ui.view">
+        <field name="name">folio.report.wizard</field>
+        <field name="model">folio.report.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Guest in House Report">
+                <group>
+                    <group>
+                        <field name="date_start" required="1"  string="Date"/>
+                    </group>
+                </group>
+                <footer>
+                    <button
+                        name="print_guest_list_report"
+                        string="Print"
+                        icon="fa-print"
+                        type="object"
+                        class="oe_highlight"
+                    />
+                    <button
+                        string="Cancel"
+                        icon="fa-close"
+                        class="btn btn-primary"
+                        special="cancel"
+                    />
+                </footer>
+            </form>
+        </field>
+    </record>
+    <!--Action for folio report wizard -->
+    <record id="hotel_folio_guest_wizard" model="ir.actions.act_window">
+        <field name="name">Guest in House Report</field>
+        <field name="res_model">folio.report.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="view_id" ref="view_hotel_folio_guest_wizard"/>
+    </record>
+    
+    <menuitem
+        name="Guest in House"
+        action="hotel_folio_guest_wizard"
+        id="wizard_guest_menu"
+        parent="hotel_report_menu"
+        sequence="31"
+    />
+</odoo>

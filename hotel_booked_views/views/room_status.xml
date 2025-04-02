@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+
+		<!-- Form View For Room Status Analysis -->
+		<record id="form_room_status_view" model="ir.ui.view">
+			<field name="name">room.status</field>
+			<field name="model">room.status</field>
+			<field name="arch" type="xml">
+				<form string="Room Status" create="0" edit="1" delete="0" duplicate="0">
+					 <style>.o_FormRenderer_chatterContainer{
+							max-width: inherit !important;
+						}
+						.o_content{
+							background: #fff;
+						}
+						.bookingchart,.bookedheader 
+						{
+							display: flex;
+						}
+						.bookedheader{
+							display: block;
+						}
+						.o_form_button_save,
+						.o_form_button_cancel{
+							display:none;
+						}
+						.leftslider{
+							background: #f6f6f6;
+							line-height: 2;
+							padding: 10px;
+							border-radius: 4px;
+							width: 15%;
+							position: absolute;
+							height: 100%;
+						}
+						.bodybook{
+							 background: #f6f6f6;
+							line-height: 2;
+							padding: 10px;
+							border-radius: 4px;
+							width: 100%;
+						}
+						.headercall{
+							background: #ced4da;
+							font-size: 16px;
+							padding: 6px 15px;
+							border-radius: 4px;
+							font-weight: bold;
+							text-align: center;
+						   
+						}
+						.roomscall{
+							font-size: 11px;
+							padding: 6px 2px;
+							border-radius: 4px;
+							font-weight: bold;
+							width: 1%;
+						}
+						.room{
+							border: 1px solid #dee2e6;
+							padding: 4px;
+							border-radius: 2px;
+							background: #e9ecef;
+							cursor: pointer;
+							width: 300px;
+    						display: inline-block;
+						}
+						p {
+							margin-bottom: 0 !important;
+						}
+						.roomtitle{
+							text-align: center;
+							font-weight: bold;
+							color: #fff;
+							font-size: 16px;
+							border-bottom: 1px solid #ced4da;
+						}
+						.occupied{
+							background: #e40000;
+						}
+						.outoforder{
+							background: #d8cd2d;
+    						color: #000;
+						}
+						.vacant{
+							background: green;
+						}
+						.room:hover{
+							border: 1px solid #ced4da;
+							padding: 2px;
+							background: #ced4da;
+						}
+						.roomtd{
+							width: 100%;
+						}
+						.filter{
+							display: inline-block;
+   							width: 100%;
+						}
+						</style>
+					<div class="bookedheader">
+						<h3><field name="name" readonly="1" /></h3>
+						<div class="filter">
+							<div style="display: contents;"> Date Filter : <field name="from_date"/> </div>
+							<div style="float: right;text-align: right;"> Status : <field name="status" style="width: 70%;"/> </div>
+						</div>
+					</div>
+					<div class="bookingchart">
+						<div class="bodybook">
+							<field name="html_body"/>
+						</div>
+					</div>
+				</form>
+			</field>
+		</record>
+
+		<!-- Action For Hotel Availability Analysis -->
+		<record id="action_room_status_compare" model="ir.actions.act_window">
+			<field name="name">Room Status</field>
+			<field name="res_model">room.status</field>
+			<field name="view_mode">form</field>
+            <field name="target">inline</field>
+			<field name="res_id" ref="hotel_booked_views.hotel_availability_data"/>
+		</record>
+
+		<menuitem id="hotel_room_status_menuitem" name="Room Status" action="action_room_status_compare" parent="hotel_booked_views.hotel_dashboard_menuitem" sequence="3" />
+	
+    </data>
+</odoo>

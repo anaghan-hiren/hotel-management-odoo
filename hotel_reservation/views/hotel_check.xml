@@ -1,0 +1,121 @@
+<odoo>
+	<record id="hotel_check_tree" model="ir.ui.view">
+		<field name="name">hotel check tree</field>
+		<field name="model">hotel.check</field>
+		<field name="arch" type="xml">
+			<tree string="Hotel Check In\Out">
+				<field name="reservation_id"/>
+				<field name="reservation_room" widget="many2many_tags"/>
+				<field name="state"/>
+			</tree>
+		</field>
+	</record>
+	<record id="hotel_check_form" model="ir.ui.view">
+		<field name="name">hotel check form</field>
+		<field name="model">hotel.check</field>
+		<field name="arch" type="xml">
+			<form string="Hotel Check In\Out">
+				<header>
+					<button
+							name="confirm"
+							string="Confirm"
+							states="draft"
+							class="oe_highlight"
+							type="object"
+					/>
+					<!-- <button name="action_register_payment" string="Register Payment" class="oe_highlight" type="object" attrs="{'invisible':[('is_show_register_payment','=',False)]}"/> -->
+					<button name="action_register_payment" string="Register Payment" class="oe_highlight" type="object" attrs="{'invisible':[('state','=','cancel')]}"/>
+					<button name="action_cancel" string="Cancel" class="btn-default" type="object"
+							states="draft,confirm"/>
+					<field name="state" widget="statusbar"/>
+					<field name="is_show_register_payment" invisible="1"/>
+				</header>
+				<sheet>
+					<div>
+						<field name="check_type" widget="radio" options="{'horizontal': true}" attrs="{'readonly':[('state','!=','draft')]}"/>
+					</div>
+					<div>
+						<group>
+							<group string="Reservation">
+								<field name="is_with_blocking" invisible="1"/>
+								<field name="reservation_id" attrs="{'invisible': [('check_type', '!=', 'check_in')],'required': [('check_type', '=', 'check_in')],'readonly': [('state', '!=', 'draft')]}"/>
+								<field name="allowed_geust_name" invisible="1"/>
+								<field name="reservation_room_id" attrs="{'invisible': [('check_type', '=', 'check_in')],'readonly':[('state','!=','draft')]}"/>
+								<field name="check_out_room" attrs="{'invisible':['|',('check_type','=','check_in'),('check_out_all_rooms','=',True)]}" context="{'no_reflect':1}"/>
+								<field name="allowed_partner_ids" widget="many2many_tags" invisible="1"/>
+								<field name="geust_id" attrs="{'invisible': ['|',('check_type', '=', 'check_in'),('is_main_guest_use','=',False)],'readonly':[('state','!=','draft')]}" domain="[('id','in',allowed_geust_name)]"/>
+								<field name="partner_id" attrs="{'invisible': ['|',('check_type', '!=', 'check_in'),('check_out_all_rooms','=',True)],'readonly':['|',('is_with_blocking','=',False),('state','!=','draft')],'required': [('check_type', '=', 'check_in')]}" domain="[('id','in',allowed_partner_ids)]" force_save="1"/>
+								<field name="checkin" invisible="1" force_save="1"/>
+								<field name="checkout" invisible="1" force_save="1"/>
+								<field name="night" readonly="1"/>
+								<field name="is_main_guest_use" attrs="{'invisible':[('check_type','=','check_in')]}"/>
+								<field name="avl_room_person_ids" widget="many2many_tags" invisible="1"/>
+								<field name="room_person_ids" domain="[('id','in',avl_room_person_ids)]" attrs="{'invisible':['|',('is_main_guest_use','=',True),('check_type','=','check_in')]}" widget="many2many_tags"/>
+							   	<field name="service_payment_type" required="1" widget="radio" attrs="{'invisible':['|',('is_main_guest_use','=',False),('check_type','=','check_in')]}"/>
+							</group>
+							<group>
+								<field name="check_out_all_rooms" attrs="{'invisible':['|',('check_type','=','check_in'),('state','!=','draft')]}"/>
+								<field name="type_of_rate" options="{'horizontal': true}" widget='radio' attrs="{'invisible':[('check_type','=','check_out')]}"/>
+								<field name="night_rate_line" attrs="{'readonly': [('type_of_rate', '!=', 'night_of_rate')],'invisible':[('type_of_rate','!=','night_of_rate')]}" options="{'no_open': True}" force_save="1">
+									<tree editable="bottom" class="night_rate_line_check">
+										<field name="night_number" readonly="1" force_save="1"/>
+										<field name="rate_code" />
+									</tree>
+								</field>
+								<label for="manual_rate_line" class="manual_rate_line_label" attrs="{'invisible':[('type_of_rate','!=','manually')]}"/> 
+								<field name="manual_rate_line" class="manual_rate_line" attrs="{'readonly': [('type_of_rate', '!=', 'manually')],'invisible':[('type_of_rate','!=','manually')]}" options="{'no_open': True}" force_save="1">
+									<tree editable="bottom" class="manual_rate_line_tree">
+										<field name="night_number" readonly="1" force_save="1"/>
+										<field name="rate_code" />
+									</tree>
+								</field>
+							</group>
+						</group>
+						<group>
+							<group>
+							</group>
+							<group>
+								<field name="amount_total" attrs="{'invisible':[('check_type','=','check_in')]}"/>
+								<field name="tax_amount" attrs="{'invisible':[('check_type','=','check_in')]}"/>
+								<field name="paid_amount" attrs="{'invisible':[('check_type','=','check_in')]}"/>
+								<field name="amount_residual" attrs="{'invisible':[('check_type','=','check_in')]}"/>
+							</group>
+						</group>
+					</div>
+					<div attrs="{'invisible': [('check_type', '!=', 'check_in')],'readonly': [('is_with_blocking','=',True)]}">
+						<group string="Rooms" attrs="{'invisible': [('reservation_id', '=', False)]}">
+							<field name="reservation_room" attrs="{'readonly': [('state', '!=', 'draft')]}" force_save="1">
+								<tree editable="bottom">
+									<field name="room_type_list" invisible="1"/>
+									<field name="room_type" domain="[('id','in',room_type_list)]" required="1"/>
+									<field name="allowed_room_name" invisible="1"/>
+									<field name="room_name"
+										   context="{'special_display_name': True,'tree_view_ref':'hotel.view_hotel_room_tree'}"
+										   force_save="1"
+										   required="1"
+										   domain="[('id','in',allowed_room_name)]"
+										   />
+									<field name="room_number" invisible="1" readonly="1"/>
+									<field name="reservation_line" invisible="1"/>
+									<field name="blocking_line" invisible="1"/>
+								</tree>
+							</field>
+						</group>
+					</div>
+				</sheet>
+
+			</form>
+		</field>
+	</record>
+	<record id="hotel_check_action" model="ir.actions.act_window">
+		<field name="name">Hotel Check In\Out</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">hotel.check</field>
+		<field name="view_mode">tree,form</field>
+	</record>
+	<!-- This Menu Item must have a parent and an action -->
+
+	<menuitem id="hotel_check_menu" name="Check In\Out" parent="hotel_reservation.menu_hotel_reservation"
+			  action="hotel_check_action" sequence="3"/>
+
+</odoo>

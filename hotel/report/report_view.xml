@@ -1,0 +1,54 @@
+<odoo>
+    <!-- Paper Format -->
+    <record id="paperformat_guest_list_landscape_report" model="report.paperformat">
+        <field name="name">Guest List Landscape Report Format</field>
+        <field name="default" eval="True" />
+        <field name="format">custom</field>
+        <field name="format">A4</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Landscape</field>
+        <field name="margin_top">5</field>
+        <field name="margin_bottom">10</field>
+        <field name="margin_left">3</field>
+        <field name="margin_right">3</field>
+        <field name="header_line" eval="False" />
+        <field name="header_spacing">0</field>
+        <field name="dpi">90</field>
+    </record>
+    <!--Report for hotel folio -->
+    <record id="report_hotel_management" model="ir.actions.report">
+         <field name="name">Hotel Folio</field>
+         <field name="model">hotel.folio</field>
+         <field name="report_type">qweb-pdf</field>
+         <field name="report_file">hotel.report_hotel_folio</field>
+         <field name="report_name">hotel.report_hotel_folio</field>
+    </record>
+
+    <!--Report for print guest list-->
+    <record id="report_print_guest_list" model="ir.actions.report">
+         <field name="name">Print Guest List</field>
+         <field name="model">hotel.folio</field>
+         <field name="report_type">qweb-pdf</field>
+         <field name="report_file">hotel.report_hotel_guest_list_tmpl</field>
+         <field name="report_name">hotel.report_hotel_guest_list_tmpl</field>
+         <field name="paperformat_id" ref="hotel.paperformat_guest_list_landscape_report"/>
+    </record>
+
+     <!-- Report For Meals Forcast  -->
+    <record id="meals_forcast_report" model="ir.actions.report">
+         <field name="name">Meals Forcast Report</field>
+         <field name="model">meals.forcast</field>
+         <field name="report_type">qweb-pdf</field>
+         <field name="report_file">hotel.report_meals_forcast</field>
+         <field name="report_name">hotel.report_meals_forcast</field>
+    </record>
+      <!--Report for hotel service line -->
+    <record id="report_hotel_services" model="ir.actions.report">
+         <field name="name">Hotel Folio Services</field>
+         <field name="model">hotel.folio</field>
+         <field name="report_type">qweb-pdf</field>
+         <field name="report_file">hotel.report_hotel_folio_services</field>
+         <field name="report_name">hotel.report_hotel_folio_services</field>
+    </record>
+</odoo>

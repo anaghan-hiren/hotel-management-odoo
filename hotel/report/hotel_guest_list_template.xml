@@ -1,0 +1,98 @@
+<odoo>
+	<template id="hotel_guest_list_internal_layout">
+		<div class="article" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">
+			<t t-raw="0"/>
+		</div>
+	</template>
+	<!--Template for hotel guest list -->
+	<template id="report_hotel_guest_list_tmpl">
+		<t t-call="web.html_container">
+			<t t-call="hotel.hotel_guest_list_internal_layout">
+
+				<div class="page" style="margin-bottom:20px;word-spacing:5px;">
+					<br />
+					<div>
+						<p style="width: 100%;font-size: 23px;font-weight: bold;">
+							<span>
+								Guest In House
+							</span>
+							<span style="float:right;width:60%;text-align:right;vertical-align: text-bottom;">
+								Date : <t t-esc="active_record.date_start" />
+							</span>
+						</p>
+					</div>
+					<style>
+						table , tr, th , td{
+							border:1px solid black;
+						}
+						th{
+							text-align:center;
+							font-size:16px;
+						}
+						td{
+							font-size:14px;
+						}
+					</style>
+						<table style="width:100%;">
+							<tr>
+								<th rowspan="2">ROOM NO.</th>
+								<th rowspan="2">GUEST NAME</th>
+								<th colspan="3">PX.</th>
+								<th rowspan="2">ARR. DATE</th>
+								<th rowspan="2">DEP. DATE</th>
+								<th rowspan="2">TVL/A</th>
+								<th rowspan="2">M.PLAN</th>
+								<th rowspan="2">NATION.</th>
+								<th rowspan="2">REMARKLS</th>
+							</tr>
+							<tr>
+								<th>ADT.</th>
+								<th>CH.</th>
+								<th>INF.</th>
+							</tr>
+							<t t-set="adults" t-value="0"/>
+							<t t-set="children" t-value="0"/>
+							<t t-set="infant" t-value="0"/>
+							<t t-foreach="docs" t-as='doc'>
+								<t t-foreach="doc.reservation_line" t-as='line'>
+									<tr style="font-size: 14px;" t-foreach="line.reserve" t-as='room'>
+										<td style="padding:5px;width:6%;"><t t-esc="room.name" /></td>
+										<td style="padding:5px;width:16	%;"><t t-esc="doc.partner_id.name" /> <t t-esc="doc.reservation_no"/></td>
+										<td style="padding:5px;width:4%;text-align: center;"><t t-esc="doc.adults"/> <t t-set="adults" t-value="adults+doc.adults"/></td>
+										<td style="padding:5px;width:4%;text-align: center;"><t t-esc="doc.children"/> <t t-set="children" t-value="children+doc.children"/></td>
+										<td style="padding:5px;width:4%;text-align: center;"><t t-esc="doc.infant"/> <t t-set="infant" t-value="infant+doc.infant"/></td>
+										<td style="padding:5px;width:12%;"> <span t-esc="doc.checkin" t-options='{"widget": "datetime"}'/></td>
+										<td style="padding:5px;width:12%;"> <span t-esc="doc.checkout" t-options='{"widget": "datetime"}'/></td>
+										<td style="padding:5px;width:9%;text-align: center;">
+											<t t-if="doc.source == 'main office'">
+												Main Office
+											</t>
+											<t t-if="doc.source == 'individual'">
+												Individual
+											</t>
+											<t t-if="doc.source == 'hotel reservation'">
+												Hotel Reservation
+											</t>
+											<t t-if="doc.source == 'qouted'">
+												Qouted
+											</t>
+										</td>
+										<td style="padding:5px;width:9%;text-align: center;"><t t-esc="get_service_line(doc)"/></td>
+										<td style="padding:5px;width:10%;"><t t-if="doc.nationality" t-esc="doc.nationality.name"/></td>
+										<td style="padding:5px;width:10%;"><t t-esc="doc.note"/></td>
+									</tr>
+								</t>
+							</t>
+							<tr>
+									<th colspan="2"></th>
+									<th><t t-esc="adults"/></th>
+									<th><t t-esc="children"/></th>
+									<th><t t-esc="infant"/></th>
+									<th colspan="6"></th>
+								</tr>
+						</table>
+				</div>
+			</t>
+		</t>
+	</template>
+</odoo>

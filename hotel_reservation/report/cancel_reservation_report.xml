@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<template id="report_cancel_reservation">
+		<t t-call="web.html_container">
+			<t t-call="web.external_layout">
+				<div class="page">
+					<t t-out="docs.html_body"/>
+				</div>
+			</t>
+		</t>
+	</template>
+
+	<template id="report_confirm_cancel_reservation">
+		<t t-call="web.html_container">
+			<t t-call="web.external_layout">
+				<div class="page">
+					<div>
+						<table class="table">
+							<thead>
+								<tr>
+									<th>Reservation number</th>
+									<th>Guest name</th>
+									<th>Option date</th>
+									<th>Ordering Contact</th>
+									<th>status</th>
+									<th>notes</th>
+								</tr>
+							</thead>
+							<tbody>
+								<t t-foreach="docs.reservation_ids" t-as="reservation_id">
+									<tr>
+										<td>
+											<a t-att-href="'#id=' + str(reservation_id.id) + '&amp;model=hotel.reservation'">
+												<t t-esc="reservation_id.reservation_no"/>
+											</a>
+										</td>
+										<td>
+											<t t-esc="reservation_id.partner_id.name"/>
+										</td>
+										<td>
+											<t t-esc="reservation_id.option_date"/>
+										</td>
+										<td>
+											<t t-esc="reservation_id.partner_order_id.name"/>
+										</td>
+										<td>
+											<t t-esc="reservation_id.status"/>
+										</td>
+										<td>
+											<t t-esc="reservation_id.note"/>
+										</td>
+									</tr>
+								</t>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</t>
+		</t>
+	</template>
+
+	<record id="action_report_cancel_reservation" model="ir.actions.report">
+		<field name="name">Cancel Reservation Analysis</field>
+		<field name="model">cancel.reservation.analysis</field>
+		<field name="report_type">qweb-pdf</field>
+		<field name="report_name">hotel_reservation.report_cancel_reservation</field>
+		<field name="report_file">hotel_reservation.report_cancel_reservation</field>
+		<field name="binding_model_id" ref="hotel_reservation.model_cancel_reservation_analysis"/>
+	</record>
+
+	<record id="action_report_confirm_cancel_reservation" model="ir.actions.report">
+		<field name="name">Confirm Cancel Reservation Analysis</field>
+		<field name="model">confirm.cancel.reservation</field>
+		<field name="report_type">qweb-pdf</field>
+		<field name="report_name">hotel_reservation.report_confirm_cancel_reservation</field>
+		<field name="report_file">hotel_reservation.report_confirm_cancel_reservation</field>
+		<field name="binding_model_id" ref="hotel_reservation.model_cancel_reservation_analysis"/>
+	</record>
+
+</odoo>

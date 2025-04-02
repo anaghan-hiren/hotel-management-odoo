@@ -1,0 +1,63 @@
+<odoo>
+    <record id="view_product_product_form_inherited_extend" model="ir.ui.view">
+        <field name="name">view.product.product</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_normal_form_view" />
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='general_information']" position="before"> 
+                <page string='Hotel Details'>
+                   <group>
+                        <group string='Type Of Hotel Product'>
+                            <field name="isroom"/>
+                            <field name="iscategid"/>
+                            <field name="isservice" readonly="1"/>
+                        </group>
+                         <group>
+                            <field name="type_of_service" attrs="{'required':[('isservice','=',True)]}"/>
+                        </group>
+                   </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+
+    <!-- <record id="view_product_product_form_inherited_extend_001" model="ir.ui.view">
+        <field name="name">view.product.product</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_normal_form_view" />
+        <field name="arch" type="xml">
+            <field name="barcode" position="before"> 
+                <field name="isroom"/>
+                <field name="iscategid"/>
+                <field name="isservice"/>
+                <field name="type_of_service"/>
+            </field>
+        </field>
+    </record> -->
+
+
+
+     <record id="sale_view_order_form_extend_hotel" model="ir.ui.view">
+        <field name="name">view.sale.order.form.inherited</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form" />
+        <field name="arch" type="xml">
+            <notebook position="inside"> 
+                <page string='Hotel  Booking Details' invisible="1">
+                   <field name="booking_line">
+                        <tree>  
+                            <field name="name"/>
+                            <field name="product_id"/>
+                            <field name="price_unit"/>
+                            <field name="product_uom" invisible="1"/>
+                            <field name="tax_id" widget="many2many_tags"/>
+                            <field name="price_subtotal"/>
+                            <field name="price_total"/>
+                        </tree>
+                   </field> 
+                </page>
+            </notebook>
+        </field>
+    </record>
+</odoo>

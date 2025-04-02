@@ -1,0 +1,98 @@
+<odoo>
+	<record id="hotel_account_payment_form" model="ir.ui.view">
+			<field name="name">account.payment.form</field>
+			<field name="model">account.payment</field>
+			<field name="arch" type="xml">
+				<form string="Register Payment">
+					<sheet>
+						<!-- Invisible fields -->
+						<field name="id" invisible="1"/>
+						<field name="is_move_sent" invisible="1"/>
+						<field name="is_reconciled" invisible="1"/>
+						<field name="is_matched" invisible="1"/>
+						<field name="payment_method_code" invisible="1"/>
+						<field name="show_partner_bank_account" invisible="1"/>
+						<field name="require_partner_bank_account" invisible="1"/>
+						<field name="hide_payment_method_line" invisible="1"/>
+						<field name="available_payment_method_line_ids" invisible="1"/>
+						<field name="available_partner_bank_ids" invisible="1"/>
+						<field name="suitable_journal_ids" invisible="1"/>
+						<field name="country_code" invisible="1"/>
+						<field name="partner_type" invisible="1"/>
+						<field name="posted_before" invisible="1"/>
+						<field name="reconciled_invoices_type" invisible="1"/>
+						<field name="company_id" invisible="1"/>
+						<field name="paired_internal_transfer_payment_id" invisible="1"/>
+						 <field name="state" invisible="1"/>
+
+						<group>
+							<group name="group1">
+								 <field name="journal_id"
+									   domain="[('type', 'in', ('bank', 'cash'))]"
+									   attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+								<field name="partner_bank_id" context="{'default_partner_id': partner_id}" string="Recipient Bank Account	"/>
+								<field invisible="1" name="is_internal_transfer" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+								<field invisible="1" name="payment_type" widget="radio" options="{'horizontal': True}"
+										attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+								<field invisible="1" name="partner_id" context="{'default_is_company': True}" string="Customer"
+									   attrs="{'readonly':[('state', '!=', 'draft')],
+											 'invisible':['|', ('partner_type','!=','customer'), ('is_internal_transfer', '=', True)]}"/>
+								<field name="is_show_options" invisible="1"/>
+								<field name="is_main_guest_use" attrs="{'invisible':[('is_show_options','=',False)]}"/>
+								<field name="blocking_line" invisible="1"/>
+								<field name="avl_room_person_ids" widget="many2many_tags" invisible="1"/>
+								<field name="room_person_ids" domain="[('id','in',avl_room_person_ids)]" attrs="{'invisible':['|',('is_main_guest_use','=',True),('is_show_options','=',False)]}" widget="many2many_tags"/>
+							   	<field name="service_payment_type" required="1" widget="radio" attrs="{'invisible':['|',('is_main_guest_use','=',False),('is_show_options','=',False)]}"/>
+							</group>
+							<group name="group2">
+								<label for="amount"/>
+								<div name="amount_div" class="o_row">
+									<field name="amount"
+										   attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+									<field name="currency_id"
+										   options="{'no_create': True, 'no_open': True}"
+										   required="1"
+										   attrs="{'readonly': [('state', '!=', 'draft')]}"
+										   groups="base.group_multi_currency"/>
+								</div>
+								<field name="date" string="Payment Date"
+									   attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+								<field name="ref" string="Memo"/>
+
+								<field invisible="1" name="payment_method_line_id" required="1" options="{'no_create': True, 'no_open': True}"
+									   attrs="{'readonly': [('state', '!=', 'draft')], 'invisible': [('hide_payment_method_line', '=', True)]}"/>
+
+
+
+								<field name="destination_journal_id" invisible="1" context="{'default_partner_id': partner_id}"
+									   attrs="{'invisible': [('is_internal_transfer', '=', False)],
+									   'readonly': [('state', '!=', 'draft')], 'required': [('is_internal_transfer', '=', True),('state', '=', 'draft')]}"/>
+							</group>
+							<group>
+								<field name="qr_code" invisible="1"/>
+								<div attrs="{'invisible': [('qr_code', '=', False)]}" colspan="2" class="text-center">
+									<field name="qr_code" widget="html"/>
+								</div>
+							</group>
+						</group>
+						<footer>
+								<button
+									name="action_post"
+									string="Create Payment"
+									type="object"
+									class="oe_highlight"
+									context="{'reservation_id':reservation_id}"
+								/>
+								<button
+									string="Cancel"
+									icon="fa-close"
+									class="btn btn-primary"
+									special="cancel"
+								/>
+								<field name="reservation_id" invisible="1"/>
+							</footer>
+					</sheet>
+				</form>
+			</field>
+		</record>
+</odoo>

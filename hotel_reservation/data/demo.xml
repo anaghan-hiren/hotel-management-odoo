@@ -1,0 +1,17 @@
+<odoo>
+	<data noupdate="1">
+
+		<record id="hotel_reservation_cancel" model="cancel.reservation.analysis">
+			<field name="name">Cancel Reservation Report</field>
+		</record>
+
+		<record id="hotel_reservation_confirm_cancel" model="confirm.cancel.reservation">
+			<field name="name">(Confirm/Cancel) Reservation</field>
+		</record>
+
+		<record id="hotel_room_transfers" model="room.transfers">
+			<field name="name">Transfers</field>
+		</record>
+		
+	</data>
+</odoo>

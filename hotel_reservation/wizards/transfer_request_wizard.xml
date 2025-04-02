@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+	
+	<!-- Form View For Transfer Request Wizard -->
+	<record id="form_transfer_request_wizard_view" model="ir.ui.view">
+		<field name="name">transfer.request.wizard.form</field>
+		<field name="model">transfer.request.wizard</field>
+		<field name="arch" type="xml">
+			<form string="Transfer Request">
+				<group>
+					<group>
+						<field name="name" invisible="1"/>
+						<field name="date_transfer" readonly="1"/>
+						<field name="old_room_id" readonly="1"/>
+						<field name="reservation_id" readonly="1"/>
+					</group>
+					<group>
+						<field name="transfer_type" required="1"/>
+						<field name="available_room_ids" widget="many2many_tags" invisible="1"/>
+						<field name="new_room_id" required="1" domain="[('id','in',available_room_ids)]"/>
+						<field name="reason" required="1"/>
+					</group>
+				</group>
+				<footer>
+					<button
+						name="action_confirm"
+						string="Confirm"
+						type="object"
+						class="oe_highlight"
+					/>
+					<button
+						string="Cancel"
+						class="btn btn-primary"
+						special="cancel"
+					/>
+				</footer>
+			</form>
+		</field>
+	</record>
+
+	<!-- Action For Transfer Request Wizard -->
+	<record id="action_transfer_request_wizard" model="ir.actions.act_window">
+		<field name="name">Transfer Request</field>
+		<field name="res_model">transfer.request.wizard</field>
+		<field name="binding_view_types">form</field>
+		<field name="view_mode">form</field>
+		<field name="target">new</field>
+	</record>
+</odoo>

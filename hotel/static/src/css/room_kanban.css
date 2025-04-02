@@ -1,0 +1,8 @@
+.openerp .oe_kanban_view .oe_kanban_status {
+    position: relative;
+    top: -13px;
+}
+th[data-name="night_number"]{
+    width: 50% !important;
+    max-width: 50% !important;
+}

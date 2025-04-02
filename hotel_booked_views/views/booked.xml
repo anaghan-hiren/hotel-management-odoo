@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+
+		<!-- Form View For Booking Compare Analysis -->
+		<record id="form_booked_booked_view" model="ir.ui.view">
+			<field name="name">booked.booked</field>
+			<field name="model">booked.booked</field>
+			<field name="arch" type="xml">
+				<form string="Purchase Price Comparison Analysis Report" create="0" edit="1" delete="0" duplicate="0">
+					 <style>.o_FormRenderer_chatterContainer{
+							max-width: inherit !important;
+						}
+						.o_content{
+							background: #fff;
+						}
+						.bookingchart,.bookedheader 
+						{
+							display: flex;
+						}
+						.bookedheader{
+							text-align: center;
+							align-items: center;
+							display: block;
+						}
+						.o_form_button_save,
+						.o_form_button_cancel{
+							display:none;
+						}
+						.leftslider{
+							background: #f6f6f6;
+							line-height: 2;
+							padding: 10px;
+							border-radius: 4px;
+							width: 15%;
+							height: 70%;
+							position: fixed;
+    						z-index: 1;
+							border: 2px solid #e9ecef;
+						}
+						.bodybook{
+							 background: #f6f6f6;
+							line-height: 2;
+							padding: 10px;
+							border-radius: 4px;
+							margin-left: 16%;
+							width: 100%;
+							height: 70%;
+							position: absolute;
+							border: 2px solid #e9ecef;
+						}
+						.headercall{
+							background: #ced4da;
+							font-size: 16px;
+							padding: 6px 15px;
+							border-radius: 4px;
+							font-weight: bold;
+							text-align: center;
+						   
+						}
+						.roomscall{
+							font-size: 11px;
+							padding: 6px 2px;
+							border-radius: 4px;
+							font-weight: bold;
+							width: 1%;
+						}
+						.room{
+							border: 2px solid #dee2e6;
+							padding: 4px;
+							border-radius: 2px;
+							background: #e9ecef;
+							text-align: center;
+							cursor: pointer;
+						}
+						.available:hover{
+							border: 1px solid #ced4da;
+							padding: 2px;
+							background: #ced4da;
+						
+						}
+						.roomtd{
+							width: 100%;
+						}
+
+						.booked {
+							background-color: green;
+							color: #fff;
+							
+						}
+						.inquiry {
+							background-color: #ffff0073;
+						}
+
+						.o_form_button_edit {
+							display: none;
+						}
+						</style>
+					<div class="bookedheader">
+						<h3><field name="name" readonly="1" /></h3>
+						<div> Date Filter : <field name="from_date"/>  To <field name="to_date"/> </div>
+					</div>
+					<div class="bookingchart">
+						<div class="leftslider">
+							<h2 style="border-bottom: 2.5px solid #adb5bd6e;line-height: 2;color: #adb5bd;">Room Type</h2>
+							<field name="room_type_ids" widget="many2many_checkboxes"/>
+						</div>
+						<div class="bodybook">
+							<field name="html_body"/>
+						</div>
+					</div>
+				</form>
+			</field>
+		</record>
+		<!-- Action For Booking Compare Analysis -->
+		<record id="action_booked_booked_compare" model="ir.actions.act_window">
+			<field name="name">Booking Status</field>
+			<field name="res_model">booked.booked</field>
+			<field name="view_mode">form</field>
+			<field name="target">inline</field>
+			<field name="res_id" ref="hotel_booked_views.hotel_booked_data"/>
+		</record>
+		
+		
+		<!-- Menu For Purchase Price Compare Analysis -->
+
+		<menuitem id="hotel_booked_menuitem" name="Booking Status" action="action_booked_booked_compare" parent="hotel_booked_views.hotel_dashboard_menuitem" sequence="2" />
+	</data>
+</odoo>
